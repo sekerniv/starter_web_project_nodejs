@@ -1,0 +1,12 @@
+{
+  "name": "starter-web-project-nodejs",
+  "version": "1.0.0",
+  "description": "Simple Node.js starter web app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
