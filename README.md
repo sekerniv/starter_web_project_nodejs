@@ -14,5 +14,9 @@ endpoint that returns the text `world`.
    ```bash
    npm start
    ```
-3. Open your browser to `http://localhost:3000` and you should see
+3. Start or restart the server using the helper script:
+   ```bash
+   npm run start-server
+   ```
+4. Open your browser to `http://localhost:3000` and you should see
    **Hello world!** displayed.
