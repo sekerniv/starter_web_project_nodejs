@@ -10,7 +10,8 @@ else
   echo "Starting server..."
 fi
 
-# Start the server in the background
-node server.js &
+# Start the server in the foreground to ensure Codespaces
+# properly detects the port and offers the Open in Browser link
+node server.js
 
 
