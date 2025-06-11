@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-# Start or restart the Node.js server
-
-# Attempt to kill any running instance of server.js
-if pgrep -f "node\s*server.js" > /dev/null; then
-  echo "Restarting existing server..."
-  pkill -f "node\s*server.js"
+# Start or restart Firebase emulators for functions and hosting
+if pgrep -f "firebase.*emulators:start" > /dev/null; then
+  echo "Restarting Firebase emulators..."
+  pkill -f "firebase.*emulators:start"
 else
-  echo "Starting server..."
+  echo "Starting Firebase emulators..."
 fi
 
-# Start the server in the foreground to ensure Codespaces
-# properly detects the port and offers the Open in Browser link
-node server.js
-
-
+npx firebase emulators:start --only functions,hosting
