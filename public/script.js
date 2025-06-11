@@ -1,5 +1,5 @@
 document.getElementById('helloBtn').addEventListener('click', function() {
-  name = document.getElementById('textField').value;
+  const name = document.getElementById('textField').value;
   fetch('/hello?name=' + name)
     .then(function(response) {
       return response.text();

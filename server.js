@@ -15,6 +15,10 @@ if (fs.existsSync(keyPath)) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+
+// ##### YOUR CODE STARTS HERE: ######
 app.get('/hello', (req, res) => {
   const name = req.query.name;
   res.send(`Hello, ${name}`);
