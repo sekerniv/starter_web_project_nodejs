@@ -30,3 +30,8 @@ endpoint that returns the text `world`.
    initialized automatically.
 4. Use the `/increment` endpoint to increase a shared counter stored in
    Firestore. Each call returns the updated value as plain text.
+
+## Development in Codespaces
+
+A `.devcontainer` configuration automates installation of dependencies when the codespace is created. A Git `post-merge` hook also runs `npm install` after you pull new changes to keep dependencies up to date.
+
