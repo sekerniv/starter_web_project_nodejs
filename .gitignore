@@ -1,3 +1,26 @@
+# Root-level node modules (if applicable)
 node_modules/
+
+# Functions-specific node modules
 functions/node_modules/
+
+# Firebase service account key (should NEVER be committed)
 firebaseKey.json
+
+# Firebase emulators state files
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Local Firebase settings
+.firebaserc
+
+# VS Code settings (optional)
+.vscode/
+
+# Environment files (if used)
+.env
+.env.local
+
+# macOS and system junk (optional, but common)
+.DS_Store
