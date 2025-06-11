@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+if [ -f package.json ]; then
+  echo "Running npm install after merge..."
+  npm install
+fi
