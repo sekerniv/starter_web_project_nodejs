@@ -4,11 +4,15 @@
   "description": "Simple Node.js starter web app",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "start-server": "./start-server.sh"
+    "start": "npm run serve",
+    "start-server": "./start-server.sh",
+    "serve": "firebase emulators:start --only functions,hosting"
   },
   "dependencies": {
     "express": "^4.18.2",
     "firebase-admin": "^13.4.0"
+  },
+  "devDependencies": {
+    "firebase-tools": "^12.4.1"
   }
 }
