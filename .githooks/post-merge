@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 if [ -f package.json ]; then
-  echo "Running npm install after merge..."
+  echo "Running npm install in root..."
   npm install
+fi
+
+if [ -f functions/package.json ]; then
+  echo "Running npm install in functions..."
+  (cd functions && npm install)
 fi

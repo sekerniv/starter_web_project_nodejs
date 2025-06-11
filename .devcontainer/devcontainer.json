@@ -1,6 +1,12 @@
 {
   "name": "starter-web-project-nodejs",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:18-bullseye",
-  "postCreateCommand": "npm install && git config --local core.hooksPath .githooks",
-  "postStartCommand": "npm install"
+  "postCreateCommand": "npm install && (cd functions && npm install) && git config --local core.hooksPath .githooks",
+  "postStartCommand": "npm install && (cd functions && npm install)",
+  "portsAttributes": {
+    "5000": {
+      "label": "Web App",
+      "onAutoForward": "openBrowser"
+    }
+  }
 }
