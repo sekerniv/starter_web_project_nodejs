@@ -6,7 +6,6 @@ const admin = require('firebase-admin');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 const keyPath = path.join(__dirname, 'firebaseKey.json');
 if (fs.existsSync(keyPath)) {
   const serviceAccount = require(keyPath);
@@ -17,13 +16,16 @@ if (fs.existsSync(keyPath)) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/hello', (req, res) => {
-  res.send('world');
+  const name = req.query.name;
+  res.send(`Hello, ${name}`);
 });
 
 app.post('/increment', async (req, res) => {
   const db = req.app.locals.db;
+
   const counterRef = db.collection('counters').doc('clicks');
   const doc = await counterRef.get();
+
   let current = 0;
   if (doc.exists) {
     current = doc.data().value;

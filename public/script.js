@@ -1,10 +1,13 @@
-fetch('/hello')
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(text) {
-    document.getElementById('message').textContent = 'Hello ' + text + '!';
-  });
+document.getElementById('helloBtn').addEventListener('click', function() {
+  name = document.getElementById('textField').value;
+  fetch('/hello?name=' + name)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(text) {
+      document.getElementById('message').textContent = text;
+    });
+});
 
 var button = document.getElementById('incrementBtn');
 button.addEventListener('click', function() {
