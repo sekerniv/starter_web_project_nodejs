@@ -20,3 +20,13 @@ endpoint that returns the text `world`.
    ```
 4. Open your browser to `http://localhost:3000` and you should see
    **Hello world!** displayed.
+
+## Firebase Counter Integration
+
+1. Create a Firebase project and generate a **service account** key from the
+   Firebase console.
+2. Save the downloaded JSON file as `firebaseKey.json` in the project root.
+3. Start the server as normal. If the key is found, Firestore will be
+   initialized automatically.
+4. Use the `/increment` endpoint to increase a shared counter stored in
+   Firestore. Each call returns the updated value as plain text.
