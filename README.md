@@ -15,6 +15,7 @@ This repository contains starter code for a small web application now configured
    ```
 3. The helper script `npm run start-server` performs the same task and restarts the emulators if they were already running.
 4. Open your browser to `http://localhost:5000` and you should see **Hello world!** displayed.
+5. In Codespaces the port is automatically forwarded so the **Open Website** button opens the app at `http://localhost:5000`.
 
 ## Firebase Counter Integration
 
@@ -24,4 +25,5 @@ This repository contains starter code for a small web application now configured
 
 ## Development in Codespaces
 
-A `.devcontainer` configuration automates installation of dependencies when the codespace is created. A Git `post-merge` hook also runs `npm install` after you pull new changes to keep dependencies up to date.
+A `.devcontainer` configuration installs dependencies for both the root project and the Cloud Functions when the codespace is created or started. A Git `post-merge` hook also runs `npm install` in the root and `functions` directories after you pull new changes to keep everything up to date.
+
