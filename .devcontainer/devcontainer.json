@@ -7,6 +7,9 @@
     "5000": {
       "label": "Web App",
       "onAutoForward": "openBrowser"
+    },
+    "*": {
+      "onAutoForward": "silent"
     }
-  }
+}
 }
