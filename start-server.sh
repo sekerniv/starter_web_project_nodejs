@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Start or restart Firebase emulators for functions and hosting
-if pgrep -f "firebase.*emulators:start" > /dev/null; then
-  echo "Restarting Firebase emulators..."
-  pkill -f "firebase.*emulators:start"
+# Start or restart the development server that connects to production Firestore
+if pgrep -f "node server.js" > /dev/null; then
+  echo "Restarting Node server..."
+  pkill -f "node server.js"
 else
-  echo "Starting Firebase emulators..."
+  echo "Starting Node server..."
 fi
 
-npx firebase emulators:start --only functions,hosting
+node server.js
