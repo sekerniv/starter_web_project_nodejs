@@ -2,11 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Server",
+      "name": "Run Functions",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start-server"],
+      "runtimeArgs": ["start"],
       "console": "integratedTerminal"
     }
   ]

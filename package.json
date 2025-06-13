@@ -2,14 +2,16 @@
   "name": "starter-web-project-nodejs",
   "version": "1.0.0",
   "description": "Simple Node.js starter web app",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "start-server": "./start-server.sh"
+    "start": "functions-framework --target=app",
+    "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
     "express": "^4.18.2",
     "firebase-admin": "^13.4.0",
-    "ejs": "^3.1.10"
+    "firebase-functions": "^6.3.2",
+    "ejs": "^3.1.10",
+    "@google-cloud/functions-framework": "^4.0.0"
   }
 }
