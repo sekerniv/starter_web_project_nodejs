@@ -1,24 +1,25 @@
-name: Deploy Firebase Functions
+name: Deploy Firebase Functions and Hosting
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-    
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+
       - run: npm ci
+
       - uses: w9jds/firebase-action@v2.2.0
         with:
           args: deploy --only functions,hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}

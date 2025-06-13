@@ -12,9 +12,9 @@ pnpm-debug.log*
 .env.*
 
 # Firebase local state
-.firebase/                         # Contains cache, emulator state — ignore it
-firebase-debug.log                 # CLI debug logs — local-only
-firestore-debug.log               # Same
+.firebase/
+firebase-debug.log
+firestore-debug.log
 
 # Secret credentials
 service-account-key.json
