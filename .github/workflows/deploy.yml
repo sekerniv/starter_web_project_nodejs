@@ -1,4 +1,4 @@
-name: Deploy Firebase Functions and Hosting
+name: Deploy to Firebase
 
 on:
   push:
@@ -9,17 +9,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🧰 Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - run: npm ci
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - uses: w9jds/firebase-action@v2.2.0
-        with:
-          args: deploy --only functions,hosting
+      - name: 🚀 Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: 🔐 Deploy to Firebase
+        run: firebase deploy --only functions,hosting --project "$(jq -r '.projects.default' .firebaserc)"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
