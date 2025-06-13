@@ -18,7 +18,7 @@ jobs:
       - run: npm ci
       - uses: w9jds/firebase-action@v2.2.0
         with:
-          args: deploy --only functions
+          args: deploy --only functions,hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
