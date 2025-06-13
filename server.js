@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-const keyPath = path.join(__dirname, 'firebaseKey.json');
+const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
   const serviceAccount = require(keyPath);
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
