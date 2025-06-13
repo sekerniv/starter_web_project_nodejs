@@ -1,2 +1,42 @@
+# Node modules
 node_modules/
-firebaseKey.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# dotenv environment variables
+.env
+.env.*
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+firebase.json
+.firebaserc
+firebase-messaging-sw.js
+service-account-key.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+coverage/
+
+
+# Optional: npm package lock files (uncomment if you want to ignore)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Others
+.idea/
+*.local
+*.sublime-workspace
+*.sublime-project
