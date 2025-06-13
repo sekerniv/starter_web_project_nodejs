@@ -25,7 +25,12 @@ jobs:
       - name: 🚀 Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: 🛑 Skip deployment if secret is missing
+        if: ${{ secrets.FIREBASE_TOKEN == '' }}
+        run: echo "⚠️ No FIREBASE_TOKEN secret found. Skipping deployment."
+
       - name: 🔐 Deploy to Firebase
+        if: ${{ secrets.FIREBASE_TOKEN != '' }}
         run: firebase deploy --only functions,hosting --project "$(jq -r '.projects.default' .firebaserc)"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
