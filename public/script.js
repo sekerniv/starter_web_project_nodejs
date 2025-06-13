@@ -1,21 +1,14 @@
-document.getElementById('helloBtn').addEventListener('click', function() {
+document.getElementById('helloBtn').addEventListener('click', async function() {
   const name = document.getElementById('textField').value;
-  fetch('/hello?name=' + name)
-    .then(function(response) {
-      return response.text();
-    })
-    .then(function(text) {
-      document.getElementById('message').textContent = text;
-    });
+  const response = await fetch('/hello?name=' + name);
+  const text = await response.text();
+  document.getElementById('message').textContent = text;
 });
 
 var button = document.getElementById('incrementBtn');
-button.addEventListener('click', function() {
-  fetch('/increment', { method: 'POST' })
-    .then(function(res) {
-      return res.text();
-    })
-    .then(function(val) {
-      button.textContent = val;
-    });
+button.addEventListener('click', async function() {
+  const res = await fetch('/increment', { method: 'POST' });
+  const val = await res.text();
+  button.textContent = val;
 });
+
