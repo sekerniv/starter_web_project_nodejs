@@ -4,10 +4,12 @@ const path = require('path');
 const fs = require('fs');
 const admin = require('firebase-admin');
 
+
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
@@ -51,5 +53,28 @@ app.post('/increment', async (req, res) => {
   await counterRef.set({ value: updated });
   res.send(updated.toString());
 });
+
+app.post('/nearbyParkingLots', async (req, res) => {
+  const { latitude, longitude } = req.body;
+
+  const destinations = locations.map(loc => `${loc.lat},${loc.lng}`).join('|');
+  const origin = `${latitude},${longitude}`;
+  const apiKey = "123";
+
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinations}&key=${apiKey}&mode=driving`;
+
+  const result = await fetch(url);
+  const json = await result.json();
+
+  const distances = json.rows[0].elements.map((el, i) => ({
+    ...locations[i],
+    distance: el.distance.value,
+    distanceText: el.distance.text
+  }));
+
+  distances.sort((a, b) => a.distance - b.distance);
+  res.json(distances);
+});
+
 
 exports.app = functions.https.onRequest(app);
