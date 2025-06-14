@@ -27,7 +27,7 @@ async function findClosest() {
     },
     async (error) => {
       console.error('Geolocation error:', error);
-      alert(`Error ${error.code}: ${error.message}` +" will show results for default location!");
+      alert(`Error ${error.code}: ${error.message}` + " will show results for default location!");
       await showResultsForLocation(32.0640029, 34.7740735);
 
     }
@@ -35,12 +35,11 @@ async function findClosest() {
 
   async function showResultsForLocation(latitude, longitude) {
     const response = await fetch('/nearbyParkingLots', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ latitude, longitude })
-      });
-      const locations = await response.json();
-      showResults(locations);
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ latitude, longitude })
+    });
+    const locations = await response.json();
     const list = document.getElementById('parkingLots');
     list.innerHTML = '';
     locations.forEach(loc => {

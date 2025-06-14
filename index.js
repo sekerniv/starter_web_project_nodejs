@@ -55,19 +55,29 @@ app.post('/increment', async (req, res) => {
 });
 
 app.post('/nearbyParkingLots', async (req, res) => {
+  const googleApiKey = functions.config().google.api_key;
   const { latitude, longitude } = req.body;
+  const snapshot = await db.collection('parkingLots').get();
+  const lots = [];
+  snapshot.forEach(doc => {
+    lots.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+  const destinations = lots
+  .map(loc => `${loc.location.latitude},${loc.location.longitude}`)
+  .join('|');
 
-  const destinations = locations.map(loc => `${loc.lat},${loc.lng}`).join('|');
-  const origin = `${latitude},${longitude}`;
-  const apiKey = "123";
+const origin = `${latitude},${longitude}`;
 
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinations}&key=${apiKey}&mode=driving`;
+const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinations}&key=${googleApiKey}&mode=driving`;
 
   const result = await fetch(url);
   const json = await result.json();
 
   const distances = json.rows[0].elements.map((el, i) => ({
-    ...locations[i],
+    ...lots[i],
     distance: el.distance.value,
     distanceText: el.distance.text
   }));
