@@ -28,3 +28,13 @@ Pushing changes to the `main` branch triggers a GitHub Action that deploys the C
 ## Development in Codespaces
 
 A `.devcontainer` configuration automates installation of dependencies when the codespace is created. A Git `post-merge` hook also runs `npm install` after you pull new changes to keep dependencies up to date.
+
+
+Things to iron out:
+* update the project structure in the original project, including adding services folder
+* write instructions on what to do to set the google maps token 
+* write how to set the firestore token and ensure that it actually works in production
+
+Things to check on hourly pricing:
+* if you enter in flat rate segment, does it switch to hourly segment for all the hours after the flat rate segment that you entered in, even for the next flat rate segment that will start in the afternoon of the next day?
+* does it work in the same way for friday -> saturday -> sunday? assuming that in this case it's for sure two flat segments and not hourly

@@ -13,23 +13,21 @@ button.addEventListener('click', async function () {
   button.textContent = val;
 });
 
-
 async function findClosest() {
   if (!navigator.geolocation) {
     console.error('Geolocation is not supported by this browser.');
     return;
   }
+
   navigator.geolocation.getCurrentPosition(
     async (position) => {
       const { latitude, longitude } = position.coords;
       await showResultsForLocation(latitude, longitude);
-
     },
     async (error) => {
       console.error('Geolocation error:', error);
-      alert(`Error ${error.code}: ${error.message}` + " will show results for default location!");
-      await showResultsForLocation(32.0640029, 34.7740735);
-
+      alert(`Error ${error.code}: ${error.message} — showing results for default location.`);
+      await showResultsForLocation(32.0640029, 34.7740735); // Default: Tel Aviv
     }
   );
 
@@ -39,15 +37,16 @@ async function findClosest() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ latitude, longitude })
     });
+
     const locations = await response.json();
     const list = document.getElementById('parkingLots');
     list.innerHTML = '';
+
     locations.forEach(loc => {
       const li = document.createElement('li');
-      li.textContent = `${loc.name}: ${loc.distanceText}`;
+      const [price12, price24, price48] = loc.prices;
+      li.textContent = `${loc.name} — 12h: ₪${price12}, 24h: ₪${price24}, 48h: ₪${price48}`;
       list.appendChild(li);
     });
   }
-
 }
-

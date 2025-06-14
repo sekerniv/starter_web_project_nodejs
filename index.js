@@ -3,13 +3,14 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const admin = require('firebase-admin');
+const { getDrivingDistances } = require('./services/googleMaps');
+const { calculateParkingFee } = require('./services/pricing');
 
 
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
@@ -21,6 +22,8 @@ if (fs.existsSync(keyPath)) {
 
 const db = admin.firestore();
 app.locals.db = db;
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', async (req, res) => {
   let counter = 0;
@@ -34,8 +37,6 @@ app.get('/', async (req, res) => {
   }
   res.render('index', { counter });
 });
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/hello', (req, res) => {
   const name = req.query.name;
@@ -54,37 +55,43 @@ app.post('/increment', async (req, res) => {
   res.send(updated.toString());
 });
 
+const HOURS_TO_CALCULATE = [12, 24, 48];
+
 app.post('/nearbyParkingLots', async (req, res) => {
-  const googleApiKey = functions.config().google.api_key;
-  const { latitude, longitude } = req.body;
-  const snapshot = await db.collection('parkingLots').get();
-  const lots = [];
-  snapshot.forEach(doc => {
-    lots.push({
-      id: doc.id,
-      ...doc.data()
+  try {
+    const googleApiKey = functions.config().google.api_key;
+    const { latitude, longitude, isResident = false } = req.body;
+
+    const snapshot = await db.collection('parkingLots').get();
+    const lots = [];
+    snapshot.forEach(doc => {
+      lots.push({ id: doc.id, ...doc.data() });
     });
-  });
-  const destinations = lots
-  .map(loc => `${loc.location.latitude},${loc.location.longitude}`)
-  .join('|');
 
-const origin = `${latitude},${longitude}`;
+    const distanceData = await getDrivingDistances({ latitude, longitude }, lots, googleApiKey);
 
-const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinations}&key=${googleApiKey}&mode=driving`;
+    const now = new Date();
+    const results = distanceData.map((lotWithDistance) => {
+      const prices = HOURS_TO_CALCULATE.map(hours => {
+        const exit = new Date(now.getTime() + hours * 60 * 60 * 1000);
+        return calculateParkingFee(lotWithDistance, now, exit, isResident);
+      });
 
-  const result = await fetch(url);
-  const json = await result.json();
+      return {
+        id: lotWithDistance.id,
+        name: lotWithDistance.name,
+        location: lotWithDistance.location,
+        prices,
+        distance: lotWithDistance.distance // for sorting
+      };
+    });
 
-  const distances = json.rows[0].elements.map((el, i) => ({
-    ...lots[i],
-    distance: el.distance.value,
-    distanceText: el.distance.text
-  }));
-
-  distances.sort((a, b) => a.distance - b.distance);
-  res.json(distances);
+    results.sort((a, b) => a.distance - b.distance);
+    res.json(results.map(({ distance, ...rest }) => rest)); // remove distance from response
+  } catch (error) {
+    console.error('Error fetching distances:', error);
+    res.status(500).send('Something went wrong');
+  }
 });
-
 
 exports.app = functions.https.onRequest(app);
