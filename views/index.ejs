@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Hello World Web App</title>
   <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
   <h1 id="message">Hello</h1>
 
   <input id="textField" type="text" placeholder="Type your name">
   <button id="helloBtn">Say Hello</button>
+  <label>
+    <input type="checkbox" id="residentCheckbox" />
+    I am a resident
+  </label>
 
   <br><br>
 
-  <button id="incrementBtn"><%= counter %></button>
+  <button id="incrementBtn">
+    <%= counter %>
+  </button>
 
   <ul id="parkingLots"></ul>
 
   <script src="/script.js"></script>
 </body>
+
 </html>

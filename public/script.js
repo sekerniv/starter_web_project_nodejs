@@ -32,10 +32,12 @@ async function findClosest() {
   );
 
   async function showResultsForLocation(latitude, longitude) {
+    const isResident = document.getElementById('residentCheckbox').checked;
+
     const response = await fetch('/nearbyParkingLots', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ latitude, longitude })
+      body: JSON.stringify({ latitude, longitude, isResident })
     });
 
     const locations = await response.json();
@@ -43,8 +45,8 @@ async function findClosest() {
     list.innerHTML = '';
 
     locations.forEach(loc => {
-      const li = document.createElement('li');
       const [price12, price24, price48] = loc.prices;
+      const li = document.createElement('li');
       li.textContent = `${loc.name} — 12h: ₪${price12}, 24h: ₪${price24}, 48h: ₪${price48}`;
       list.appendChild(li);
     });

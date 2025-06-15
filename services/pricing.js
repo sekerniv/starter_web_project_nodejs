@@ -10,7 +10,8 @@ function nextOccurrence(day, hour, reference) {
 function calculateParkingFee(parkingLot, entryTime, exitTime, isResident = false) {
   const hourlyRate = parkingLot.hourly?.hourPrice || 0;
   const flatRate = parkingLot.flatRate;
-  const residentDiscount = isResident ? (parkingLot.residentDiscount ?? 1) : 1;
+  const discountRate = isResident ? (parkingLot.residentDiscount ?? 0) : 0; // e.g., 0.75 => 75% off
+  const discountMultiplier = 1 - discountRate; // e.g., 1 - 0.75 = 0.25
 
   const flatSegment = flatRate?.times?.find(segment => {
     const from = nextOccurrence(segment.fromDay, segment.fromHour, entryTime);
@@ -37,7 +38,7 @@ function calculateParkingFee(parkingLot, entryTime, exitTime, isResident = false
     total = hourlyRate * hours;
   }
 
-  return total * residentDiscount;
+  return total * (isResident ? discountMultiplier : 1);
 }
 
 
