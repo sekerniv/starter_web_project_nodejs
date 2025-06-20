@@ -14,6 +14,7 @@ if (fs.existsSync(keyPath)) {
   const serviceAccount = require(keyPath);
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 } else {
+  console.error('MISSING firebase service-account-key.json. See details in README on how to get one');
   admin.initializeApp();
 }
 

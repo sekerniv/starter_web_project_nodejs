@@ -28,7 +28,7 @@ jobs:
       - name: 🔐 Conditional Deploy to Firebase
         run: |
           if [ -z "${FIREBASE_TOKEN}" ]; then
-            echo "⚠️ No FIREBASE_TOKEN secret found. Skipping deployment."
+            echo "⚠️ No FIREBASE_TOKEN secret found. Skipping deployment. ** YOU NEED TO OPEN TERMINAL, RUN: ./setup-firebase-deploy.sh    AND FOLLOW THE STEPS **
             exit 0
           fi
           firebase deploy --only functions,hosting --project "$(jq -r '.projects.default' .firebaserc)"
