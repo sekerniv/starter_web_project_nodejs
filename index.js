@@ -87,7 +87,10 @@ app.post('/nearbyParkingLots', async (req, res) => {
     });
 
     results.sort((a, b) => a.distance - b.distance);
-    res.json(results.map(({ distance, ...rest }) => rest)); // remove distance from response
+    res.json(results.map(({ distance, ...rest }) => ({
+      ...rest,
+      distanceText: `${(distance / 1000).toFixed(1)} km`
+    })));
   } catch (error) {
     console.error('Error fetching distances:', error);
     res.status(500).send('Something went wrong');
