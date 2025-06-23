@@ -1,5 +1,35 @@
+/* style.css */
+
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-top: 50px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+}
+
+#message {
+  font-weight: 500;
+}
+
+#textField {
+  max-width: 100%;
+}
+
+.list-group-item {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f1f3f5;
+  cursor: pointer;
+}
+
+.btn {
+  transition: background-color 0.2s ease;
+}
+
+.btn-outline-primary i,
+.btn-success i,
+.btn-secondary i {
+  margin-right: 6px;
 }
