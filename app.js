@@ -5,12 +5,18 @@ const fs = require('fs');
 const admin = require('firebase-admin');
 const { getDrivingDistances } = require('./services/googleMaps');
 const { calculateParkingFee } = require('./services/pricing');
+const expressLayouts = require('express-ejs-layouts');
+
 
 
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// Adding support for layouts
+app.use(expressLayouts);
+app.set('layout', 'layout');
 
 const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
@@ -35,7 +41,25 @@ app.get('/', async (req, res) => {
   } catch (err) {
     console.error('Error reading counter', err);
   }
-  res.render('index', { counter });
+  res.render('index', {
+    counter: counter,
+    title: 'Find Parking',
+    activeTab: 'home'
+  });
+});
+
+app.get('/about', async (req, res) => {
+  res.render('about', {
+    title: 'about',
+    activeTab: 'about'
+  });
+});
+
+app.get('/settings', async (req, res) => {
+  res.render('settings', {
+    title: 'settings',
+    activeTab: 'settings'
+  });
 });
 
 app.get('/hello', (req, res) => {
