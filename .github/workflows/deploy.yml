@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: false
+        default: 'main'
 
 jobs:
   deploy:
@@ -13,6 +18,8 @@ jobs:
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref_name }}
 
       - name: 🧰 Set up Node.js
         uses: actions/setup-node@v3
@@ -25,7 +32,7 @@ jobs:
       - name: 🚀 Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: 🔐 Conditional Deploy to Firebase
+      - name: 🔐 Deploy to Firebase
         run: |
           if [ -z "${FIREBASE_TOKEN}" ]; then
             echo "⚠️ No FIREBASE_TOKEN secret found. Skipping deployment."
