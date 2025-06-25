@@ -41,7 +41,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="\">
+            <a class="navbar-brand" href="/">
                 <img src="/img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Parking Finder TLV
             </a>
@@ -49,22 +49,45 @@
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarToggler">
+
+                <!-- Left-aligned nav links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <%= activeTab === 'home' ? 'active' : '' %>" aria-current="page" href="/">Home</a>
+                        <a class="nav-link <%= activeTab === 'home' ? 'active' : '' %>" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  <%= activeTab === 'about' ? 'active' : '' %>" href="/about">About</a>
+                        <a class="nav-link <%= activeTab === 'about' ? 'active' : '' %>" href="/about">About</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
+
+                <!-- Right-aligned settings dropdown -->
+                <ul class="navbar-nav ms-auto">
+                    <% if (user) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-gear"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/settings">Settings</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </a>
+                            </li>
+                            <% } %>
+                </ul>
             </div>
         </div>
     </nav>
+
 
 
     <%- body %> <!-- This is the placeholder for page-specific content -->

@@ -6,6 +6,7 @@ const admin = require('firebase-admin');
 const { getDrivingDistances } = require('./services/googleMaps');
 const { calculateParkingFee } = require('./services/pricing');
 const expressLayouts = require('express-ejs-layouts');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -17,6 +18,16 @@ app.set('view engine', 'ejs');
 // Adding support for layouts
 app.use(expressLayouts);
 app.set('layout', 'layout');
+
+app.use(cookieParser('your-secret-key'));
+
+app.use((req, res, next) => {
+  const user = req.signedCookies.user;
+  if (user) {
+    req.user = user;
+  }
+  next();
+});
 
 const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
@@ -31,6 +42,33 @@ app.locals.db = db;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/login', (req, res) => {
+  res.render('login', {
+    title: 'Login',
+    activeTab: '',
+    user: req.user
+  });
+});
+
+// Handle login form submission
+app.post('/login', express.urlencoded({ extended: true }), (req, res) => {
+  const { username, password } = req.body;
+
+  // Replace with real credential check
+  if (username === 'admin' && password === '1234') {
+    res.cookie('user', username, { signed: true, httpOnly: true });
+    res.redirect('/');
+  } else {
+    res.status(401).send('Invalid credentials');
+  }
+});
+
+// Handle logout
+app.get('/logout', (req, res) => {
+  res.clearCookie('user');
+  res.redirect('/');
+});
+
 app.get('/', async (req, res) => {
   let counter = 0;
   try {
@@ -44,21 +82,24 @@ app.get('/', async (req, res) => {
   res.render('index', {
     counter: counter,
     title: 'Find Parking',
-    activeTab: 'home'
+    activeTab: 'home',
+    user: req.user || null,
   });
 });
 
 app.get('/about', async (req, res) => {
   res.render('about', {
     title: 'about',
-    activeTab: 'about'
+    activeTab: 'about',
+    user: req.user || null,
   });
 });
 
-app.get('/settings', async (req, res) => {
+app.get('/settings', requireLogin, (req, res) => {
   res.render('settings', {
-    title: 'settings',
-    activeTab: 'settings'
+    title: 'Settings',
+    activeTab: 'settings',
+    user: req.user,
   });
 });
 
@@ -120,5 +161,10 @@ app.post('/nearbyParkingLots', async (req, res) => {
     res.status(500).send('Something went wrong');
   }
 });
+
+function requireLogin(req, res, next) {
+  if (!req.user) return res.redirect('/login');
+  next();
+}
 
 exports.app = functions.https.onRequest(app);
