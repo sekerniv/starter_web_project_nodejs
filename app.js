@@ -124,7 +124,8 @@ const HOURS_TO_CALCULATE = [12, 24, 48];
 
 app.post('/nearbyParkingLots', async (req, res) => {
   try {
-    const googleApiKey = functions.config().google.api_key;
+    const googleApiKey = process.env.GOOGLE_API_KEY;
+    console.log("GOOGLE_API_KEY (length):", process.env.GOOGLE_API_KEY?.length);
     const { latitude, longitude, isResident = false } = req.body;
 
     const snapshot = await db.collection('parkingLots').get();
@@ -167,4 +168,14 @@ function requireLogin(req, res, next) {
   next();
 }
 
-exports.app = functions.https.onRequest(app);
+const { onRequest } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
+
+const googleApiKey = defineSecret("GOOGLE_API_KEY");
+
+exports.app = onRequest(
+  {
+    secrets: [googleApiKey]
+  },
+  app
+);
