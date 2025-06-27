@@ -22,7 +22,10 @@ app.set('layout', 'layout');
 app.use(cookieParser('your-secret-key'));
 
 app.use((req, res, next) => {
+  console.log("NODE_ENV:", process.env.NODE_ENV);
   const user = req.signedCookies.user;
+  console.log("Signed cookies:", req.signedCookies);
+  console.log('Headers:', req.headers);
   if (user) {
     req.user = user;
   }
@@ -50,13 +53,21 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.use(express.urlencoded({ extended: true }));
+
 // Handle login form submission
-app.post('/login', express.urlencoded({ extended: true }), (req, res) => {
+app.post('/login', (req, res) => {
+  console.log("Set-Cookie header:", res.getHeader('Set-Cookie'));
   const { username, password } = req.body;
 
   // Replace with real credential check
   if (username === 'admin' && password === '1234') {
-    res.cookie('user', username, { signed: true, httpOnly: true });
+    res.cookie('user', username, {
+      signed: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
     res.redirect('/');
   } else {
     res.status(401).send('Invalid credentials');
@@ -70,6 +81,9 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/', async (req, res) => {
+  console.log('Cookies:', req.cookies);
+  console.log('Signed cookies:', req.signedCookies);
+  
   let counter = 0;
   try {
     const doc = await db.collection('counters').doc('clicks').get();
