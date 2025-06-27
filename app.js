@@ -19,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', 'layout');
 
+app.set('trust proxy', 1);
 app.use(cookieParser('your-secret-key'));
 
 app.use((req, res, next) => {
@@ -28,9 +29,12 @@ app.use((req, res, next) => {
   console.log('Headers:', req.headers);
   if (user) {
     req.user = user;
+    res.set('Cache-Control', 'private');
   }
   next();
 });
+
+
 
 const keyPath = path.join(__dirname, 'service-account-key.json');
 if (fs.existsSync(keyPath)) {
@@ -62,11 +66,13 @@ app.post('/login', (req, res) => {
 
   // Replace with real credential check
   if (username === 'admin' && password === '1234') {
-    res.cookie('user', username, {
+     res.set('Cache-Control', 'private');
+    // TODO: remove the secure if it's not required
+  res.cookie('__session', username, {
       signed: true,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'Lax',
     });
     res.redirect('/');
   } else {
@@ -76,7 +82,7 @@ app.post('/login', (req, res) => {
 
 // Handle logout
 app.get('/logout', (req, res) => {
-  res.clearCookie('user');
+  res.clearCookie('__session');
   res.redirect('/');
 });
 
