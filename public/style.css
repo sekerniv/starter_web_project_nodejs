@@ -1,21 +1,30 @@
 /* style.css */
 
-.nav-link {
-    cursor: pointer;
-}
-
+/* Body + Font */
 body {
   font-family: 'Alef', 'Roboto', sans-serif;
   background-color: #f8f9fa;
   direction: rtl;
 }
 
+/* Headings */
+h1 {
+  margin-bottom: 30px;
+}
+
+/* Message title */
 #message {
   font-weight: 500;
 }
 
+/* Text input */
 #textField {
   max-width: 100%;
+}
+
+/* List layout */
+.lot-list {
+  padding-right: 0;
 }
 
 .list-group-item {
@@ -30,13 +39,32 @@ body {
   cursor: pointer;
 }
 
+/* Buttons */
 .btn {
   transition: background-color 0.2s ease;
 }
 
+/* Icons inside buttons — RTL: icon to the left of text */
 .btn-outline-primary i,
 .btn-success i,
 .btn-secondary i {
-  margin-left: 6px; /* RTL: icon to the left of text */
+  margin-left: 6px;
   margin-right: 0;
+}
+
+/* Nav elements */
+.nav-link {
+  cursor: pointer;
+  text-align: right;
+}
+
+.navbar-brand {
+  text-align: right;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #dee2e6;
 }
