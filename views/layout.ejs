@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+
+    <!-- RTL Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Alef&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        body {
+            font-family: 'Alef', 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .lot-list {
+            padding-right: 0;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <!-- Logo + Title -->
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="/img/gymnasia_logo.png" class="img-fluid me-2" style="max-height: 50px;" alt="Gymnasia Logo">
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+      aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav Links -->
+    <div class="collapse navbar-collapse justify-content-between" id="navbarToggler">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link <%= activeTab === 'home' ? 'active' : '' %>" href="/">דף הבית</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <%= activeTab === 'about' ? 'active' : '' %>" href="/about">אודות</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+    <%- body %>
+
+    <script src="/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

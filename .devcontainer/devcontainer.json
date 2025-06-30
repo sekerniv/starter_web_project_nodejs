@@ -1,6 +1,6 @@
 {
   "name": "starter-web-project-nodejs",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:18-bullseye",
-  "postCreateCommand": "npm install && git config --local core.hooksPath .githooks",
+  "postCreateCommand": "npm install && npm install -g firebase-tools && git config --local core.hooksPath .githooks",
   "postStartCommand": "npm install"
 }

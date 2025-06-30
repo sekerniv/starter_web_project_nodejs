@@ -1,5 +1,42 @@
+/* style.css */
+
+.nav-link {
+    cursor: pointer;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-top: 50px;
+  font-family: 'Alef', 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  direction: rtl;
+}
+
+#message {
+  font-weight: 500;
+}
+
+#textField {
+  max-width: 100%;
+}
+
+.list-group-item {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  transition: background-color 0.2s ease;
+  text-align: right;
+}
+
+.list-group-item:hover {
+  background-color: #f1f3f5;
+  cursor: pointer;
+}
+
+.btn {
+  transition: background-color 0.2s ease;
+}
+
+.btn-outline-primary i,
+.btn-success i,
+.btn-secondary i {
+  margin-left: 6px; /* RTL: icon to the left of text */
+  margin-right: 0;
 }

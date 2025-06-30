@@ -1,20 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Hello World Web App</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <h1 id="message">Hello</h1>
+<div class="container py-5" dir="rtl">
+  <h1 class="text-center text-primary" id="message">
+    <i class="bi"></i> ברוכים הבאים לאתר ההדגמה
+  </h1>
 
-  <input id="textField" type="text" placeholder="Type your name">
-  <button id="helloBtn">Say Hello</button>
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <form method="POST" action="/increment" class="card p-4 shadow-sm bg-white rounded">
+        <div class="mb-3 text-center">
+          <label class="form-label fw-bold">מספר ביקורים: <%= counter %></label>
+        </div>
 
-  <br><br>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">
+            הוסף <i class="bi bi-plus-circle-fill me-1"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  <button id="incrementBtn"><%= counter %></button>
-
-  <script src="/script.js"></script>
-</body>
-</html>
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <ul id="parkingLots" class="lot-list list-group"></ul>
+    </div>
+  </div>
+</div>
