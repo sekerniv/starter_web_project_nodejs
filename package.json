@@ -4,7 +4,7 @@
   "description": "Simple Node.js starter web app",
   "main": "app.js",
   "scripts": {
-    "start": "firebase functions:config:get > .runtimeconfig.json && functions-framework --target=app",
+   "start": "functions-framework --target=app",
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
