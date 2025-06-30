@@ -1,0 +1,16 @@
+[
+  {
+    "id": "Bydh8gWO5mLcudeWsvDK",
+    "title": "Harry Potter and the Chamber of Secrets",
+    "author": "J. K. Rowling",
+    "price": 34,
+    "image": "https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg"
+  },
+  {
+    "id": "sKaANDhkhxD3zOQRv667",
+    "name": "Harry Potter and the Philosopher's Stone",
+    "image": "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+    "author": "J. K. Rowling",
+    "price": 25
+  }
+]
