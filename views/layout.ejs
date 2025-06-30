@@ -22,30 +22,20 @@
 
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-
-      <!-- Logo + Title -->
       <a class="navbar-brand d-flex align-items-center" href="/">
         <img src="/img/gymnasia_logo.png" class="img-fluid me-2" style="max-height: 50px;" alt="Gymnasia Logo">
       </a>
 
-      <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-        aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Nav Links -->
       <div class="collapse navbar-collapse justify-content-between" id="navbarToggler">
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link <%= activeTab === 'home' ? 'active' : '' %>" href="/">דף הבית</a>
+            <a class="nav-link" href="/">דף הבית</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <%= activeTab === 'about' ? 'active' : '' %>" href="/about">אודות</a>
+            <a class="nav-link" href="/about">אודות</a>
           </li>
         </ul>
       </div>
-
     </div>
   </nav>
 

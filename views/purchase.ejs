@@ -1,0 +1,36 @@
+<div class="container py-5" dir="rtl">
+  <h1 class="text-center text-primary mb-4">
+    רכישת הספר - <%= book.title %>
+  </h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <p class="text-end fs-5">מחיר: ₪<%= book.price %></p>
+
+        <form action="/thankyou" method="POST">
+          <div class="mb-3">
+            <label for="cardNumber" class="form-label">מספר אשראי</label>
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="expiry" class="form-label">תאריך</label>
+            <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="cvv" class="form-label">CVV</label>
+            <input type="text" class="form-control" id="cvv" name="cvv" required>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-success">
+              בצע רכישה <i class="bi bi-check-circle-fill me-1"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

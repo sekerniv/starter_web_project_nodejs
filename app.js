@@ -1,73 +1,46 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const admin = require('firebase-admin');
-const expressLayouts = require('express-ejs-layouts');
+const setupApp = require('./setup');
 
 const app = express();
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(expressLayouts);
-app.set('layout', 'layout');
-
-app.set('trust proxy', 1);
-
-const keyPath = path.join(__dirname, 'service-account-key.json');
-if (fs.existsSync(keyPath)) {
-  const serviceAccount = require(keyPath);
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-} else {
-  admin.initializeApp();
-}
-
-const db = admin.firestore();
-app.locals.db = db;
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(express.urlencoded({ extended: true }));
-
+const db = setupApp(app);
 
 app.get('/', async (req, res) => {
-  
-  let counter = 0;
-  try {
-    const doc = await db.collection('counters').doc('clicks').get();
-    if (doc.exists) {
-      counter = doc.data().value;
-    }
-  } catch (err) {
-    console.error('Error reading counter', err);
-  }
-  res.render('index', {
-    counter: counter,
-    title: 'Demo App',
-    activeTab: 'home',
+  const snapshot = await db.collection('Books').get();
+  const books = snapshot.docs.map(doc => {
+    const data = doc.data();
+    data.id = doc.id;
+    return data;
   });
-});
 
-app.post('/increment', async (req, res) => {
-  const counterRef = db.collection('counters').doc('clicks');
-  const doc = await counterRef.get();
-  let current = 0;
-  if (doc.exists) {
-    current = doc.data().value;
-  }
-
-  const updated = current + 1;
-
-  await counterRef.set({ value: updated });
-
-  res.redirect('/');
+  res.render('index', {
+    title: 'ספרים',
+    books: books,
+  });
 });
 
 app.get('/about', async (req, res) => {
   res.render('about', {
     title: 'about',
-    activeTab: 'about',
+  });
+});
+
+app.get('/purchase/:id', async (req, res) => {
+  const id = req.params.id;
+
+  const doc = await db.collection('Books').doc(id).get();
+  const book = doc.data();
+  book.id = doc.id;
+
+  res.render('purchase', {
+    title: `רכישת הספר - ${book.title}`,
+    book: book,
+  });
+});
+
+app.post('/thankyou', (req, res) => {
+  res.render('thankyou', {
+    title: 'תודה',
   });
 });
 
