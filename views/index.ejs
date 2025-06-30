@@ -1,31 +1,35 @@
 <div class="container py-5" dir="rtl">
-  <h1 class="text-center text-primary" id="message">
-    <i class="bi"></i> ברוכים הבאים לאתר ההדגמה
+  <h1 class="text-center text-primary mb-4">
+    <i class="bi bi-book"></i> ספרים
   </h1>
 
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-      <form method="POST" action="/increment" class="card p-4 shadow-sm bg-white rounded">
-        <p class="text-center mb-4">
-          זהו טופס פשוט שמאפשר להגדיל את המונה ולראות את ערכו המעודכן.
-        </p>
-
-        <div class="mb-3 text-center">
-          <label class="form-label fw-bold">מונה: <%= counter %></label>
+  <% books.forEach(book => { %>
+    <div class="card mb-4 shadow-sm">
+      <div class="row g-0 align-items-center">
+        <div class="col-md-2 text-center p-2">
+          <img src="<%= book.image %>" alt="Book image" class="img-fluid rounded book-image" />
         </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">
-            הוסף <i class="bi bi-plus-circle-fill me-1"></i>
-          </button>
+        <div class="col-md-8">
+          <div class="card-body text-end">
+            <h5 class="card-title mb-2"><%= book.title %></h5>
+            <p class="card-text mb-1">מאת <strong><%= book.author %></strong></p>
+            <p class="card-text">מחיר: ₪<%= book.price %></p>
+          </div>
         </div>
-      </form>
+        <div class="col-md-2 text-center">
+          <a href="/purchase/<%= book.id %>" class="btn btn-success mt-3 mt-md-0">
+            לרכישה <i class="bi bi-cart"></i>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-10 mx-auto">
-      <ul id="parkingLots" class="lot-list list-group"></ul>
-    </div>
-  </div>
+  <% }); %>
 </div>
+
+<style>
+  .book-image {
+    max-height: 120px;
+    width: auto;
+    object-fit: contain;
+  }
+</style>
