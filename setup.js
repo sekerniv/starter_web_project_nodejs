@@ -14,12 +14,12 @@ module.exports = function setupApp(app) {
   app.set('layout', 'layout');
 
   app.set('trust proxy', 1);
-  //TODO: maybe move to app.js
+
   app.use(cookieParser('your-secret-key'));
 
   app.use((req, res, next) => {
-  const user = req.signedCookies.__session;
-    
+    const user = req.signedCookies.__session;
+
     if (user) {
       req.user = user;
       res.set('Cache-Control', 'private');

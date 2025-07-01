@@ -7,11 +7,12 @@ const db = setupApp(app);
 
 app.get('/', async (req, res) => {
   const snapshot = await db.collection('Books').get();
-  const books = snapshot.docs.map(doc => {
+  const books = [];
+  for (const doc of snapshot.docs) {
     const data = doc.data();
     data.id = doc.id;
-    return data;
-  });
+    books.push(data);
+  }
 
   res.render('index', {
     title: 'ספרים',
@@ -59,6 +60,7 @@ app.get('/logout', (req, res) => {
 app.get('/about', async (req, res) => {
   res.render('about', {
     title: 'about',
+    user: req.user,
   });
 });
 
