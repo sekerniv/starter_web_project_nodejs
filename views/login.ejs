@@ -1,14 +1,18 @@
 <div class="container py-5">
-  <h1>Login</h1>
+  <h1>התחברות</h1>
   <form method="POST" action="/login">
     <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
+      <label for="username" class="form-label">שם משתמש</label>
       <input type="text" name="username" class="form-control" required>
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+      <label for="password" class="form-label">סיסמה</label>
       <input type="password" name="password" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary">Log in</button>
+    <button type="submit" class="btn btn-primary">התחבר</button>
   </form>
+
+  <p class="mt-3">
+    אין לך חשבון? <a href="/signup">הירשם</a>
+  </p>
 </div>

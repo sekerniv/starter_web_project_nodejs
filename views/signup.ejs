@@ -1,0 +1,17 @@
+<div class="container py-5">
+  <h1>הרשמה</h1>
+  <form method="POST" action="/signup">
+    <div class="mb-3">
+      <label for="username" class="form-label">בחר שם משתמש</label>
+      <input type="text" name="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">בחר סיסמה</label>
+      <input type="password" name="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">הירשם</button>
+  </form>
+  <p class="mt-3">
+    כבר יש לך חשבון? <a href="/login">התחבר</a>
+  </p>
+</div>

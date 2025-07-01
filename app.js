@@ -28,23 +28,26 @@ app.get('/login', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
-  console.log("Set-Cookie header:", res.getHeader('Set-Cookie'));
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
-  // Replace with real credential check
-  if (username === 'admin' && password === '1234') {
-    res.set('Cache-Control', 'private');
-    // TODO: remove the secure if it's not required
-    res.cookie('__session', username, {
-      signed: true,
-      httpOnly: true,
-      secure: true,
-    });
-    res.redirect('/');
-  } else {
-    res.status(401).send('Invalid credentials');
+  const usersRef = db.collection('Users');
+  const querySnapshot = await usersRef
+    .where('username', '==', username)
+    .where('password', '==', password)
+    .get();
+
+  if (querySnapshot.empty) {
+    return res.status(401).send('Invalid credentials');
   }
+
+  res.set('Cache-Control', 'private');
+  res.cookie('__session', username, {
+    signed: true,
+    httpOnly: true,
+    secure: true,
+  });
+  res.redirect('/');
 });
 
 app.get('/logout', (req, res) => {
@@ -80,4 +83,32 @@ app.post('/thankyou', (req, res) => {
   });
 });
 
+app.get('/signup', (req, res) => {
+  res.render('signup', {
+    title: 'Signup',
+    user: req.user
+  });
+});
+
+app.post('/signup', async (req, res) => {
+  const { username, password } = req.body;
+
+
+  const usersRef = db.collection('Users');
+  const existing = await usersRef.where('username', '==', username).get();
+
+  if (!existing.empty) {
+    return res.status(400).send('Username already exists.');
+  }
+
+  await usersRef.add({ username, password });
+
+  res.cookie('__session', username, {
+    signed: true,
+    httpOnly: true,
+    secure: true,
+  });
+
+  res.redirect('/');
+});
 exports.app = functions.https.onRequest(app);
